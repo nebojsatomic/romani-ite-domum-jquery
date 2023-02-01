@@ -24,9 +24,8 @@ docker-build:
       fi
     - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
     - docker push "$CI_REGISTRY_IMAGE${tag}"
-    - docker rm $(docker stop $(docker ps -a -q --filter ancestor="$CI_REGISTRY_IMAGE${tag}" --format="{{.ID}}"))
+    - docker rm $(docker stop $( docker ps -aq --filter ancestor=registry.gitlab.com/nebojsatomic/landing-page-romani-ite-domum:latest ))
     - docker run -d -p 80:80 "$CI_REGISTRY_IMAGE${tag}"
-    - docker inspect --format='{{index .RepoDigests 0}}' "$CI_REGISTRY_IMAGE${tag}
   # Run this job in a branch where a Dockerfile exists
   rules:
     - if: $CI_COMMIT_BRANCH
