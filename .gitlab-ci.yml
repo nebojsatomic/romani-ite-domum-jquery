@@ -1,13 +1,13 @@
 stages:
   - build
   - deploy-to-staging
-# should add deploy-to-prod
+
 docker-build:
   # Use the official docker image.
-  image: docker:latest
+  image: docker:20.10
   stage: build
   services:
-    - name: docker:dind
+    - name: docker:20.10-dind
       alias: docker
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
