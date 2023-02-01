@@ -7,7 +7,7 @@ docker-build:
   image: docker:latest
   stage: build
   services:
-    - name: docker:18.09.7-dind
+    - name: docker:dind
       alias: docker
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
@@ -33,8 +33,10 @@ docker-build:
 deploy-to-staging:
   stage: deploy-to-staging
   before_script:
-    - chmod 400 $SSH_KEY_STAGING
+    #- chmod 400 $SSH_KEY_STAGING
+    - docker ps
   script:
-    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY_STAGING $SSH_USER_STAGING@$SSH_IP_STAGING "
-        docker ps -a "
+    #- ssh -o StrictHostKeyChecking=no -i $SSH_KEY_STAGING $SSH_USER_STAGING@$SSH_IP_STAGING "
+    #    docker ps -a "
+    - docker ps -aq
   when: manual 
