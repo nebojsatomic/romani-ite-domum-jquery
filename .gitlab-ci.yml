@@ -1,3 +1,6 @@
+stages:
+  - build
+  - deploy-to-staging
 
 docker-build:
   # Use the official docker image.
@@ -25,3 +28,12 @@ docker-build:
     - if: $CI_COMMIT_BRANCH
       exists:
         - Dockerfile
+
+deploy-to-staging:
+  stage: deploy-to-staging
+  before_script:
+    - chmod 400 $SSH_KEY_STAGING
+  script:
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY_STAGING $SSH_USER_STAGING@$SSH_IP_STAGING "
+        docker ps -a "
+  when: manual 
