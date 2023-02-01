@@ -1,7 +1,7 @@
 stages:
   - build
   - deploy-to-staging
-
+# should add deploy-to-prod
 docker-build:
   # Use the official docker image.
   image: docker:latest
