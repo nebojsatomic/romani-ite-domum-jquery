@@ -33,12 +33,24 @@ docker-build:
         - Dockerfile
 
 deploy-to-staging:
+  variables:
+    IMAGE_REF: "$CI_REGISTRY_IMAGE:latest"
   stage: deploy-to-staging
-  before_script:
-    #- chmod 400 $SSH_KEY_STAGING
-    - docker ps
-  script:
-    #- ssh -o StrictHostKeyChecking=no -i $SSH_KEY_STAGING $SSH_USER_STAGING@$SSH_IP_STAGING "
-    #    docker ps -a "
-    - docker ps -aq
-  when: manual 
+  trigger: deployments-ssh/lprid/lprid-staging
+  needs:
+    - job: docker-build
+      #artifacts: true
+  only:
+    - main
+
+
+#deploy-to-staging2:
+  #stage: deploy-to-staging
+  #before_script:
+    ##- chmod 400 $SSH_KEY_STAGING
+    #- docker ps
+  #script:
+    ##- ssh -o StrictHostKeyChecking=no -i $SSH_KEY_STAGING $SSH_USER_STAGING@$SSH_IP_STAGING "
+    ##    docker ps -a "
+    #- docker ps -aq
+  #when: manual 
