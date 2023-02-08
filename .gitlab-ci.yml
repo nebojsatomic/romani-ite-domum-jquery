@@ -24,8 +24,6 @@ docker-build:
       fi
     - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
     - docker push "$CI_REGISTRY_IMAGE${tag}"
-    #- docker rm $(docker stop $( docker ps -aq --filter name=LPRID ))
-    #- docker run -d --name=LPRID -p 80:80 "$CI_REGISTRY_IMAGE${tag}"
   # Run this job in a branch where a Dockerfile exists
   rules:
     - if: $CI_COMMIT_BRANCH
@@ -43,15 +41,3 @@ deploy-to-staging:
       #artifacts: true
   only:
     - main
-
-
-#deploy-to-staging2:
-  #stage: deploy-to-staging
-  #before_script:
-    ##- chmod 400 $SSH_KEY_STAGING
-    #- docker ps
-  #script:
-    ##- ssh -o StrictHostKeyChecking=no -i $SSH_KEY_STAGING $SSH_USER_STAGING@$SSH_IP_STAGING "
-    ##    docker ps -a "
-    #- docker ps -aq
-  #when: manual 
