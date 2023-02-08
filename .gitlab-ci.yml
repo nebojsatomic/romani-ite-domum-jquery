@@ -38,6 +38,5 @@ deploy-to-staging:
   trigger: deployments-ssh/lprid/lprid-staging
   needs:
     - job: docker-build
-      #artifacts: true
   only:
     - main
